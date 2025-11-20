@@ -16,7 +16,7 @@
         strokeWeight(3);
         myColor = color(random(255), random(255), random(255));
 
-        ws = new WebSocket('ws://p5-interactive.onrender.com:3001');
+        ws = new WebSocket("wss://p5-interactive.onrender.com");
         
 
         ws.onmessage = (event) => {
