@@ -5,19 +5,7 @@ const { WebSocketServer } = require('ws');
 // setting up http server (basic connection)
  const server = http.createServer((req, res) =>{
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Websocket server is running.')
-
-      let filePath = './public' + (req.url === '/' ? '/index.html' : req.url);
-
-  fs.readFile(filePath, (err, content) => {
-    if (err) {
-      res.writeHead(404);
-      res.end("Not found");
-    } else {
-      res.writeHead(200);
-      res.end(content);
-    }
-  });
+    res.end('Websocket server is running.');
  })
 
  // passing HTTP server into Web Socket Server
