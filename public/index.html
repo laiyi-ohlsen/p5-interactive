@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shared Drawing (p5.js)</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  </head>
+  <body>
+    <script>
+      let ws;
+      let myColor;
+
+      function setup() {
+        createCanvas(500, 400);
+        background(200);
+        strokeWeight(3);
+        myColor = color(random(255), random(255), random(255));
+
+        ws = new WebSocket(window.location.origin.replace('http', 'ws'));
+        
+
+        ws.onmessage = (event) => {
+            const msg = JSON.parse(event.data);
+            if (msg.type == 'draw'){
+                stroke(msg.color);
+                line(msg.px, msg.py, msg.x, msg.y);
+            }
+        }
+       
+      }
+
+      function mouseDragged() {
+        const data = {
+            type:'draw',
+            x: mouseX, 
+            y: mouseY, 
+            px: pmouseX, 
+            py: pmouseY, 
+            color: myColor.toString()
+        }
+
+        line(pmouseX, pmouseY, mouseX, mouseY);
+        ws.send(JSON.stringify(data));
+        
+     
+      }
+    </script>
+  </body>
+</html>
